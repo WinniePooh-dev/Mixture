@@ -13,7 +13,7 @@ const artworks = [
 ];
 // </donotmodify>
 
-export default props => (
+export default () => (
   <div>
     <NavBar />
     <Table {...artworks}/>

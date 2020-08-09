@@ -10,6 +10,16 @@ const enhance = connect(
 );
 
 class NotesList extends React.Component {
+
+  componentDidUpdate() {
+      const { notes } = this.props;
+      localStorage.setItem('notes', JSON.stringify(notes));
+  }
+
+  componentWillUnmount() {
+      // localStorage.clear()
+  }
+
   render() {
     if (!this.props.notes.length) {
       return this.renderAddButton();

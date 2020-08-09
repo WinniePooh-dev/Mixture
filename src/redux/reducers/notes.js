@@ -1,6 +1,7 @@
 import { ADD_NOTE, DELETE_NOTE } from "../actions/notes";
+import CityStorage from "../store/NotesStorage";
 
-const initState = ["note 1", "note 2", "note 3", "note 4"];
+const initState = CityStorage.getNotesList();
 
 export default function(state = initState, action) {
   switch (action.type) {
