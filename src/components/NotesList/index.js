@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addNote } from "../../redux/actions/notes";
+import { addNote, deleteNote } from "../../redux/actions/notes";
 
 import styles from "./styles.module.css";
 
 const enhance = connect(
   ({ notes }) => ({ notes }),
-  { addNote }
+  { addNote, deleteNote }
 );
 
 class NotesList extends React.Component {
@@ -18,7 +18,7 @@ class NotesList extends React.Component {
       <ul className={styles["note-list"]}>
         {this.props.notes.map((note, index) => {
           return (
-            <li key={index}>
+            <li key={index} onClick={() => this.onDeleteClick(index)}>
               {this.renderNote(note)}
               {this.renderAddButton(index)}
             </li>
@@ -41,8 +41,14 @@ class NotesList extends React.Component {
   );
 
   onAddButtonClick = e => {
+    e.stopPropagation()
     const text = window.prompt("Note text:");
-    text && this.props.addNote(text, e.target.dataset.index);
+    text && this.props.addNote(text);
+  };
+
+  onDeleteClick = idx => {
+    const confirm = window.confirm("Are you sure you want to delete this note?");
+    confirm && this.props.deleteNote(idx);
   };
 }
 
