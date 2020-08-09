@@ -1,0 +1,37 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 20px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+}
+
+thead tr {background-color: #f2f2f2;}
+
+tbody tr:hover {
+    background-color: rgba(242, 242, 242, .5);
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+tr.active, tr.active:hover {
+  color: #fffff0;
+  background-color: #808080;
+}
+
+table tbody img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.picture {
+  width: 25%;
+  height: auto;
+  display: block;
+  margin: 3rem auto;
+  border-radius: 15px;
+}
