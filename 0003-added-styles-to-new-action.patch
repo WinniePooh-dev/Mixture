@@ -1,0 +1,29 @@
+From 9e7b9ad0a3e1928a034181aab6c7ef3932cf0cc1 Mon Sep 17 00:00:00 2001
+From: Roman Belotsvetov <rbelotsvetov88@yandex.ru>
+Date: Sun, 9 Aug 2020 18:33:14 +0300
+Subject: [PATCH 3/5] added styles to new action
+
+---
+ src/components/NotesList/styles.module.css | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/components/NotesList/styles.module.css b/src/components/NotesList/styles.module.css
+index 86d6ca2..fc0cafb 100644
+--- a/src/components/NotesList/styles.module.css
++++ b/src/components/NotesList/styles.module.css
+@@ -25,6 +25,12 @@
+   z-index: 1;
+ }
+ 
++.note-list-item:active {
++  transform: scale(.97);
++  transition: 100ms;
++  box-shadow: 2px 2px 4px 0 #ccc;
++}
++
+ .add-note {
+   display: block;
+   height: 28px;
+-- 
+2.28.0.windows.1
+

@@ -1,0 +1,76 @@
+From fe3353af2a49592029a203492c1033cb8eb8d9d2 Mon Sep 17 00:00:00 2001
+From: Roman Belotsvetov <rbelotsvetov88@yandex.ru>
+Date: Mon, 10 Aug 2020 00:10:00 +0300
+Subject: [PATCH 5/5] added localStorage
+
+---
+ src/components/NotesList/index.js      | 10 ++++++++++
+ src/components/Pages/Artworks/index.js |  2 +-
+ src/redux/reducers/notes.js            |  3 ++-
+ src/redux/store/NotesStorage/index.js  |  6 ++++++
+ 4 files changed, 19 insertions(+), 2 deletions(-)
+ create mode 100644 src/redux/store/NotesStorage/index.js
+
+diff --git a/src/components/NotesList/index.js b/src/components/NotesList/index.js
+index 3f53c5e..5f904dd 100644
+--- a/src/components/NotesList/index.js
++++ b/src/components/NotesList/index.js
+@@ -10,6 +10,16 @@ const enhance = connect(
+ );
+ 
+ class NotesList extends React.Component {
++
++  componentDidUpdate() {
++      const { notes } = this.props;
++      localStorage.setItem('notes', JSON.stringify(notes));
++  }
++
++  componentWillUnmount() {
++      // localStorage.clear()
++  }
++
+   render() {
+     if (!this.props.notes.length) {
+       return this.renderAddButton();
+diff --git a/src/components/Pages/Artworks/index.js b/src/components/Pages/Artworks/index.js
+index 3ecc529..3c9872b 100644
+--- a/src/components/Pages/Artworks/index.js
++++ b/src/components/Pages/Artworks/index.js
+@@ -13,7 +13,7 @@ const artworks = [
+ ];
+ // </donotmodify>
+ 
+-export default props => (
++export default () => (
+   <div>
+     <NavBar />
+     <Table {...artworks}/>
+diff --git a/src/redux/reducers/notes.js b/src/redux/reducers/notes.js
+index 027be1d..155c4f9 100644
+--- a/src/redux/reducers/notes.js
++++ b/src/redux/reducers/notes.js
+@@ -1,6 +1,7 @@
+ import { ADD_NOTE, DELETE_NOTE } from "../actions/notes";
++import CityStorage from "../store/NotesStorage";
+ 
+-const initState = ["note 1", "note 2", "note 3", "note 4"];
++const initState = CityStorage.getNotesList();
+ 
+ export default function(state = initState, action) {
+   switch (action.type) {
+diff --git a/src/redux/store/NotesStorage/index.js b/src/redux/store/NotesStorage/index.js
+new file mode 100644
+index 0000000..ed76f39
+--- /dev/null
++++ b/src/redux/store/NotesStorage/index.js
+@@ -0,0 +1,6 @@
++export default class CityStorage {
++    static getNotesList() {
++        const notes = localStorage.getItem('notes') || [];
++        return notes.length ? JSON.parse(notes) : ["note 1", "note 2", "note 3", "note 4"];
++    };
++};
+\ No newline at end of file
+-- 
+2.28.0.windows.1
+

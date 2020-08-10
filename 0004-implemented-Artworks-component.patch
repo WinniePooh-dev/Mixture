@@ -1,0 +1,129 @@
+From 22e97f711830184bfb789b1946bdac7190afaaca Mon Sep 17 00:00:00 2001
+From: Roman Belotsvetov <rbelotsvetov88@yandex.ru>
+Date: Sun, 9 Aug 2020 23:36:01 +0300
+Subject: [PATCH 4/5] implemented Artworks component
+
+---
+ src/components/Pages/Artworks/index.js |  2 ++
+ src/components/Table/index.js          | 43 ++++++++++++++++++++++++++
+ src/components/Table/styles.module.css | 37 ++++++++++++++++++++++
+ 3 files changed, 82 insertions(+)
+ create mode 100644 src/components/Table/index.js
+ create mode 100644 src/components/Table/styles.module.css
+
+diff --git a/src/components/Pages/Artworks/index.js b/src/components/Pages/Artworks/index.js
+index 611217b..3ecc529 100644
+--- a/src/components/Pages/Artworks/index.js
++++ b/src/components/Pages/Artworks/index.js
+@@ -1,6 +1,7 @@
+ import React from "react";
+ 
+ import NavBar from "../../NavBar";
++import { Table } from "../../Table";
+ 
+ // consider this data arrived from the API
+ // <donotmodify>
+@@ -15,5 +16,6 @@ const artworks = [
+ export default props => (
+   <div>
+     <NavBar />
++    <Table {...artworks}/>
+   </div>
+ );
+diff --git a/src/components/Table/index.js b/src/components/Table/index.js
+new file mode 100644
+index 0000000..4037108
+--- /dev/null
++++ b/src/components/Table/index.js
+@@ -0,0 +1,43 @@
++import React, { useState, Fragment } from 'react';
++
++import styles from "./styles.module.css";
++
++export const Table = artworks => {
++
++    const [selected, setSelected] = useState(null);
++
++    if (!!Object.keys(artworks).length) {
++        return <Fragment>
++            <table className={styles}>
++                <thead>
++                    <tr>
++                        {headers.map((head, key) => {
++                            return <th key={key}>{head}</th>
++                        })}
++                    </tr>
++                </thead>
++                <tbody>
++                    {Object.values(artworks).map(({_id, title}) => {
++                        return (
++                            <tr key={_id} className={selected === _id ? styles['active'] : ''} onClick={() => setSelected(_id)}>
++                                <td>{title}</td>
++                                <td>
++                                    <img src={`/imgs/artworks/${_id}.jpg`} alt=''/>
++                                </td>
++                            </tr>
++                        )
++                    })}
++                </tbody>
++            </table>
++            <Picture id={selected}/>
++        </Fragment>
++    }
++    
++    return null
++}
++
++const headers = ['Artworks', 'Picture'];
++
++const Picture = ({id}) => {
++    return <img className={styles['picture']} src={`/imgs/artworks/${id}.jpg`} alt=''/>
++}
+\ No newline at end of file
+diff --git a/src/components/Table/styles.module.css b/src/components/Table/styles.module.css
+new file mode 100644
+index 0000000..f1dccbe
+--- /dev/null
++++ b/src/components/Table/styles.module.css
+@@ -0,0 +1,37 @@
++table {
++  border-collapse: collapse;
++  width: 100%;
++  font-size: 20px;
++}
++
++th, td {
++  text-align: left;
++  padding: 10px;
++}
++
++thead tr {background-color: #f2f2f2;}
++
++tbody tr:hover {
++    background-color: rgba(242, 242, 242, .5);
++}
++
++tr:nth-child(even) {background-color: #f2f2f2;}
++
++tr.active, tr.active:hover {
++  color: #fffff0;
++  background-color: #808080;
++}
++
++table tbody img {
++  width: 50px;
++  height: 50px;
++  border-radius: 50%;
++}
++
++.picture {
++  width: 25%;
++  height: auto;
++  display: block;
++  margin: 3rem auto;
++  border-radius: 15px;
++}
+\ No newline at end of file
+-- 
+2.28.0.windows.1
+
