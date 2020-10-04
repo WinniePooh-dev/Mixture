@@ -1,7 +1,7 @@
 import React from "react";
 
 import NavBar from "../../NavBar";
-import { Table } from "../../Table";
+import { Table } from "../../Pages/Table";
 
 // consider this data arrived from the API
 // <donotmodify>

@@ -53,7 +53,7 @@ class NotesList extends React.Component {
   onAddButtonClick = e => {
     e.stopPropagation()
     const text = window.prompt("Note text:");
-    text && this.props.addNote(text);
+    text && this.props.addNote(text, e.target.dataset.index);
   };
 
   onDeleteClick = idx => {
