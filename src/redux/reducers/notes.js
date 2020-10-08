@@ -13,10 +13,7 @@ export default function(state = initState, action) {
         ...state.slice(index + 1)
       ];
     case DELETE_NOTE:
-      return [
-        ...state.slice(0, action.index),
-        ...state.slice(action.index + 1)
-      ];
+      return state.filter((_, idx) => idx !== action.index);
     default:
       return state;
   }
